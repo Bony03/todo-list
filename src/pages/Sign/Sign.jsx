@@ -1,5 +1,4 @@
 import SignForm from "../../components/SignForm/SignForm";
-import SignImage from "../../components/SignForm/SignImage/SignImage";
 import "./Sign.scss";
 export default function Sign() {
   return (

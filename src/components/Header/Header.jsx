@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import MenuLink from "../MenuLink/MenuLink";
 import { photoHandler } from "../../helpers/photoHandler/photoHandler";
-import { scrollLocker } from "../../utils/handlers";
+import { scrollLocker } from "../../helpers/scrollLocker/scrollLocker";
 import "./Header.scss";
 
 export default function Header({ isAuth }) {

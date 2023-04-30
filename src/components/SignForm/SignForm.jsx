@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../Button/Button";
-import ChangeForm from "./ChangeForm/ChangeForm";
+import Forms from "./Forms/Forms";
 import Success from "../Success/Success";
 import Error from "../Error/Error";
 import { useInput } from "../../helpers/email-password-validation/useInput";
@@ -9,9 +8,10 @@ import { registerUser } from "../../store/user/registerThunk/registerThunk";
 import { loginUser } from "../../store/user/loginThunk/loginThunk";
 import { authSc, loading, authEr, auth } from "../../store/selectors/selectors";
 import { useNavigate } from "react-router-dom";
-import "./SignForm.scss";
 import { Link } from "react-router-dom";
-import { scrollLocker } from "../../utils/handlers";
+import { scrollLocker } from "../../helpers/scrollLocker/scrollLocker";
+import "./SignForm.scss";
+import SignButtons from "./SignButtons/SignButtons";
 export default function SignForm() {
   const [changeForm, setChangeForm] = useState(true);
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ export default function SignForm() {
           {authError && <Error text={authError} />}
         </div>
 
-        <ChangeForm
+        <Forms
           changeForm={changeForm}
           setChangeForm={setChangeForm}
           resetValidation={resetValidation}
@@ -78,30 +78,22 @@ export default function SignForm() {
         />
       </div>
       <div className="sign__footer">
-        <Link className="button close__button" to="/">
+        <Link
+          className="button close__button"
+          to="/"
+          onClick={() => {
+            resetValidation(true, true);
+          }}
+        >
           Close
         </Link>
-        {changeForm ? (
-          <Button
-            className="sign__button"
-            onClick={() => {
-              resetValidation(false, true);
-              loginHandler();
-            }}
-            disabled={enableButton}
-            text="Login"
-          />
-        ) : (
-          <Button
-            className="sign__button"
-            onClick={() => {
-              resetValidation();
-              registerHandler();
-            }}
-            disabled={enableButton}
-            text="Register"
-          />
-        )}
+        <SignButtons
+          changeForm={changeForm}
+          resetValidation={resetValidation}
+          loginHandler={loginHandler}
+          registerHandler={registerHandler}
+          enableButton={enableButton}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import "./Button.scss";
 
-export default function SignButton({ className, text, onClick, disabled }) {
+export default function Button({ className, text, onClick, disabled }) {
   if (disabled) {
     return (
       <button

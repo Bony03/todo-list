@@ -1,7 +1,7 @@
 import { dateFormatterMain } from "../../helpers/dateFormat/dateFormatter";
 import "./MainWeather.scss";
 import { useEffect, useState, useRef } from "react";
-
+import { touchOpenning } from "../../helpers/touchOpening/touchOpening";
 export default function MainWeather() {
   const [weather, setWeather] = useState({
     current: {
@@ -10,66 +10,13 @@ export default function MainWeather() {
     location: { name: "", country: "" },
   });
   const container = useRef();
-  const button = useRef();
-  const [openWeather, setOpenWeather] = useState(true);
-  let posInitial = 0;
-  let posFinal = 0;
-  let posY1 = 0;
-  let posY2 = 0;
-  function openTouch(e) {
-    if (e.type === "touchstart") {
-      posInitial = posY1 = e.changedTouches[0].clientY;
-      container.current.style.transition = "";
-    }
-    if (e.type === "touchmove") {
-      posY2 = e.changedTouches[0].clientY - posY1;
-      posY1 = e.changedTouches[0].clientY;
-      if (Number(container.current.style.height.replace(/px/g, "")) < 200) {
-        container.current.style.height = `${
-          Number(container.current.style.height.replace(/px/g, "")) + posY2
-        }px`;
-      }
-    }
-    if (e.type === "touchend") {
-      posFinal = e.changedTouches[0].clientY;
-      if (posInitial < posFinal) {
-        if (
-          Math.abs(posInitial - posFinal) >
-          container.current.children[0].offsetHeight * 0.5
-        ) {
-          container.current.style.transition = "all 0.5s ";
-          container.current.style.height = `${
-            container.current.children[0].offsetHeight + 16
-          }px`;
-          container.current.style.padding = "0.5rem 1rem";
-        } else {
-          container.current.style.transition = "all 0.5s ";
-          container.current.style.height = `0px`;
-          container.current.style.padding = "0px 1rem";
-        }
-      } else {
-        if (
-          Math.abs(posInitial - posFinal) >
-          container.current.children[0].offsetHeight * 0.5
-        ) {
-          container.current.style.transition = "all 0.5s ";
-          container.current.style.height = `0px`;
-          container.current.style.padding = "0px 1rem";
-        } else {
-          container.current.style.transition = "all 0.5s ";
-          container.current.style.height = `${
-            container.current.children[0].offsetHeight + 16
-          }px`;
-          container.current.style.padding = "0.5rem 1rem";
-        }
-      }
-    }
-  }
+
+  const touchHandler = touchOpenning();
 
   useEffect(() => {
     async function FetchWeather() {
       try {
-        const response = await fetch("https://api.db-ip.com/v2/free/self");
+        const response = await fetch("https://api.db-ip1.com/v2/free/self");
         if (!response.ok) {
           throw new Error("Error fetching IP");
         }
@@ -77,7 +24,7 @@ export default function MainWeather() {
         const city = data.city;
         try {
           const fetchingWeather = await fetch(
-            `http://api.weatherapi.com/v1/current.json?key=68b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
+            `http://api.weatherapi.com/v1/current.json?key=168b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
           );
           if (!response.ok) {
             throw new Error("Error fetching Weather");
@@ -117,16 +64,15 @@ export default function MainWeather() {
         </div>
       </div>
       <button
-        ref={button}
         className="main-weather__button"
         onTouchStart={(e) => {
-          openTouch(e);
+          touchHandler(e, container);
         }}
         onTouchMove={(e) => {
-          openTouch(e);
+          touchHandler(e, container);
         }}
         onTouchEnd={(e) => {
-          openTouch(e);
+          touchHandler(e, container);
         }}
       ></button>
     </div>

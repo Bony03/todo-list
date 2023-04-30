@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import "./Error.scss";
-export default function Success({ text, y }) {
+export default function Error({ text, y }) {
   if (y) {
     return (
       <motion.div
