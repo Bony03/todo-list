@@ -1,0 +1,33 @@
+.change-form {
+  &__body {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  &__button {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    color: #505160;
+    padding: 0.375rem 1rem;
+    font-size: 1.1rem;
+    position: relative;
+    &.active {
+      color: #f3b809;
+    }
+    &::after {
+      content: "";
+      display: block;
+      width: 0%;
+      height: 2px;
+      position: absolute;
+      bottom: 0;
+      background-color: #f3b809;
+      transition: width 0.5s ease-out;
+    }
+    &.active::after {
+      width: 100%;
+    }
+  }
+}
