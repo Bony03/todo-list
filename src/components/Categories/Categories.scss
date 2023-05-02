@@ -4,7 +4,7 @@
   &__container {
     & button {
       display: block;
-      color: #0d6efd;
+      color: #767676;
       position: relative;
       padding-left: 1.5625rem;
       font-weight: 600;
@@ -13,7 +13,7 @@
       margin: 2rem auto;
       &::before {
         content: url(../../../public/static/plus.svg);
-        fill: #0d6efd;
+        fill: #767676;
         position: absolute;
         top: 50%;
         left: 0;
@@ -25,9 +25,11 @@
     }
   }
   &__heading {
-    width: fit-content;
-    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
     font-weight: 700;
+    color: #767676;
   }
   &__list {
     width: 100%;
@@ -52,11 +54,11 @@
       width: max-content;
       border: none;
       font-weight: 500;
-      color: #0d6efd;
-      border-bottom: 2px solid #0d6efd;
+      color: #767676;
+      border-bottom: 2px solid #767676;
       border-radius: 3px;
       &:focus {
-        box-shadow: 0 0 5px #0d6dfd6d;
+        box-shadow: 0 0 5px #5b5b5b;
       }
       &:active {
         transform: scale(0.98);
@@ -76,13 +78,13 @@
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background-color: red;
+      background-color: #0a0a0a;
       transform: translate(0, -50%);
       &::after {
         content: attr(count);
         font-size: 10px;
         position: absolute;
-        top: -0.98px;
+        top: -0.5px;
         left: 1px;
         font-weight: 700;
         color: white;

@@ -6,7 +6,7 @@ export default function Categories() {
   return (
     <div className="categories">
       <div className="categories__container">
-        <h5 className="categories__heading">Categories:</h5>
+        <h5 className="categories__heading">Choose category</h5>
         <ul className="categories__list">
           <li className="categories__item">
             <input

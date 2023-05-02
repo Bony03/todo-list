@@ -8,8 +8,7 @@ import { todosSc } from "../../store/selectors/selectors";
 import { useEffect, useState } from "react";
 import { setTodosSuccess } from "../../store/system/system.slice";
 import Filters from "../Filters/Filters";
-import Categories from "../Categories/Categories";
-
+import AddTodoButton from "../AddTodoButton/AddTodoButton";
 export default function Todos({
   todoInput,
   setTodoInput,
@@ -48,6 +47,7 @@ export default function Todos({
   useEffect(() => {
     setFilteredArray(todoList);
   }, [todoList]);
+  const [addTodo, setAddTodo] = useState(true);
   return (
     <>
       <Col
@@ -57,28 +57,19 @@ export default function Todos({
           marginTop: "calc(var(--bs-gutter-x) * .5)",
         }}
       >
-        <AddToDo
-          todoInput={todoInput}
-          setTodoInput={setTodoInput}
-          submitHandler={submitHandler}
-        />
-        <Filters
-          doneFilter={doneFilter}
-          editedFilter={editedFilter}
-          ongoingFilter={ongoingFilter}
-          allFilter={allFilter}
-        />
+        {addTodo && (
+          <AddToDo
+            todoInput={todoInput}
+            setTodoInput={setTodoInput}
+            submitHandler={submitHandler}
+            setAddTodo={setAddTodo}
+          />
+        )}
+        <AddTodoButton setAddTodo={setAddTodo} />
+
         {todosSuccess && <Success text={todosSuccess} />}
-        <List
-          doneHandler={doneHandler}
-          deleteHandler={deleteHandler}
-          todoList={filteredArray}
-          editHandler={editHandler}
-        />
+        <List />
         {isAuth && <SaveButton />}
-      </Col>
-      <Col>
-        <Categories />
       </Col>
     </>
   );

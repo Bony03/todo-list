@@ -8,6 +8,7 @@ export default function FloatInput({
   onBlur,
   value,
   type,
+  backColor,
 }) {
   function undefinedCheck(func, e) {
     if (typeof func === "function") {
@@ -32,6 +33,9 @@ export default function FloatInput({
         className={
           value ? "floating-input__label typed" : "floating-input__label"
         }
+        style={{
+          backgroundColor: backColor,
+        }}
       >
         {label}
       </label>
