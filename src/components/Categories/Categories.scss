@@ -43,7 +43,6 @@
   }
   &__item {
     position: relative;
-
     margin-top: 0.5rem;
     & input {
       width: 200px;
@@ -67,8 +66,12 @@
         transform: translate(0, -50%) scale(0.95);
       }
       &:active ~ span::after {
-        transform: scale(0.95);
+        transform: translate(-50%, 0) scale(0.95);
       }
+    }
+    &.active input {
+      border-bottom: 2px solid #ffffff;
+      box-shadow: 0 0 5px #ffffff;
     }
     & span {
       display: block;
@@ -84,8 +87,8 @@
         content: attr(count);
         font-size: 10px;
         position: absolute;
-        top: -0.5px;
-        left: 1px;
+        transform: translateX(-50%);
+        left: 50%;
         font-weight: 700;
         color: white;
       }

@@ -1,6 +1,6 @@
 import { scrollLocker } from "../scrollLocker/scrollLocker";
 
-export function touchOpenning() {
+export function weatherTouchOpenning() {
   let posInitial = 0;
   let posFinal = 0;
   let posY1 = 0;
@@ -24,7 +24,6 @@ export function touchOpenning() {
       }
     }
     if (e.type === "touchend") {
-      scrollLocker();
       posFinal = clientY;
       if (posInitial < posFinal) {
         if (
@@ -57,6 +56,7 @@ export function touchOpenning() {
           container.current.style.padding = "0.5rem 1rem";
         }
       }
+      scrollLocker();
     }
   };
 }

@@ -11,5 +11,5 @@ export const profileSc = (state) => state.system.profileSuccess;
 export const system = (state) => state.system;
 export const user = (state) => state.user;
 export const file = (state) => state.user.file;
-export const todos = (state) => state.todo.todos;
+export const categories = (state) => state.todo;
 export const stats = (state) => state.todo.statistics;

@@ -3,10 +3,15 @@ import Button from "../../Button/Button";
 import FloatInput from "../../FloatInput/FloatInput";
 import "./AddToDo.scss";
 import Categories from "../../Categories/Categories";
-import { useDispatch } from "react-redux";
-export default function AddToDo(props) {
-  const { submitHandler, todoInput, setTodoInput, setAddTodo } = props;
-
+import { useDispatch, useSelector } from "react-redux";
+import { categories } from "../../../store/selectors/selectors";
+import {
+  addCategory,
+  addTodo,
+  setCategoryName,
+} from "../../../store/todo/todo.slice";
+import Error from "../../Error/Error";
+export default function AddToDo({ todoInput, setTodoInput, setOpenAddTodo }) {
   function todaysDayMonth() {
     const date = Date();
 
@@ -35,29 +40,39 @@ export default function AddToDo(props) {
   const [openMonth, setOpenMonth] = useState(false);
   const dispatch = useDispatch();
   const [todayMonth, today] = todaysDayMonth();
+  const [choosedCategory, setChoosedCategory] = useState("");
   const [choosedDay, setChoosedDay] = useState(today);
   const [choosedMonth, setChoosedMonth] = useState(todayMonth);
   const [inputHour, setInputHour] = useState(10);
   const [inputMinutes, setInputMinutes] = useState(30);
-  function addHandler(todoInput, category) {
-    if (category) {
-      const task = {
-        payload: {
-          id: Date.now(),
-          name: todoInput,
-          category,
-          dateAndTime: `${choosedMonth} ${choosedDay}, 2023 ${inputHour}:${inputMinutes}`,
-        },
-      };
+  const [addErrorMessage, setAddErrorMessage] = useState("");
+  function addHandler(name, category) {
+    if (!name) {
+      setAddErrorMessage("Please enter task name");
+      return;
+    }
+    if (!category) {
+      setAddErrorMessage("Please choose the category");
+      return;
     }
     const task = {
-      payload: {
-        id: Date.now(),
-        name: todoInput,
-        category: "My tasks",
-        dateAndTime: `${choosedMonth} ${choosedDay}, 2023 ${inputHour}:${inputMinutes}`,
-      },
+      id: Date.now(),
+      name: name,
+      categoryId: category.id,
+      date: `${choosedMonth} ${choosedDay}, 2023`,
+      time: `${inputHour}:${inputMinutes}`,
+      categoryName: category.name,
     };
+    dispatch(addTodo(task));
+    setOpenAddTodo(false);
+    setTodoInput("");
+  }
+  const categoriesArray = useSelector(categories);
+  function addCategoryHandler() {
+    dispatch(addCategory());
+  }
+  function inputHandler(id, name) {
+    dispatch(setCategoryName({ id, name }));
   }
   return (
     <div className="main-add-todo">
@@ -67,10 +82,18 @@ export default function AddToDo(props) {
             className="main-add-todo__form"
             onSubmit={(e) => {
               e.preventDefault();
-              submitHandler(todoInput);
+              addHandler(todoInput);
             }}
           >
             <h3 className="main-add-todo__heading">Add new task</h3>
+            {addErrorMessage && (
+              <Error
+                text={addErrorMessage}
+                closeError={() => {
+                  setAddErrorMessage("");
+                }}
+              />
+            )}
             <FloatInput
               className="main-add-todo__input"
               onChange={(e) => setTodoInput(e.target.value)}
@@ -79,7 +102,13 @@ export default function AddToDo(props) {
               backColor="#1a1a1a"
             />
           </form>
-          <Categories />
+          <Categories
+            categoriesArray={categoriesArray}
+            addCategoryHandler={addCategoryHandler}
+            inputHandler={inputHandler}
+            setChoosedCategory={setChoosedCategory}
+            choosedCategoryId={choosedCategory.id}
+          />
           <div className="main-add-todo__date-heading">Enter Date and Time</div>
           <div className="main-add-todo__date">
             <div className="day">
@@ -189,14 +218,13 @@ export default function AddToDo(props) {
           <div className="main-add-todo__button">
             <Button
               className="main-add-todo__button-close"
-              onClick={() => setAddTodo(false)}
+              onClick={() => setOpenAddTodo(false)}
               text="Close"
             ></Button>
             <Button
               className="main-add-todo__button-add"
               onClick={() => {
-                submitHandler(todoInput);
-                setAddTodo(false);
+                addHandler(todoInput, choosedCategory);
               }}
               text="Add task"
             ></Button>

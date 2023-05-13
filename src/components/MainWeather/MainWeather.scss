@@ -1,6 +1,8 @@
 .main-weather {
   border-top: 1px solid #000000;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 0;
   &__container {
     background-color: #151515;
     padding: 0 1rem;
@@ -22,6 +24,8 @@
     box-shadow: inset 0 -5px 5px -5px #000000;
     margin: auto;
     transform: perspective(120px) rotateX(-45deg) scale(1.3);
+    position: relative;
+    z-index: -1;
     &::after {
       content: "";
       display: block;
@@ -33,7 +37,6 @@
   }
   &__card {
     padding: 0.5rem;
-    background-color: #969696;
     border-radius: inherit;
     display: flex;
     align-items: center;

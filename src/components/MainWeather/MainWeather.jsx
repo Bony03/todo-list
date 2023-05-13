@@ -1,7 +1,7 @@
 import { dateFormatterMain } from "../../helpers/dateFormat/dateFormatter";
 import "./MainWeather.scss";
 import { useEffect, useState, useRef } from "react";
-import { touchOpenning } from "../../helpers/touchOpening/touchOpening";
+import { weatherTouchOpenning } from "../../helpers/touchOpening/touchOpening";
 export default function MainWeather() {
   const [weather, setWeather] = useState({
     current: {
@@ -11,7 +11,7 @@ export default function MainWeather() {
   });
   const container = useRef();
 
-  const touchHandler = touchOpenning();
+  const weatherTouchHandler = weatherTouchOpenning();
 
   useEffect(() => {
     async function FetchWeather() {
@@ -24,7 +24,7 @@ export default function MainWeather() {
         const city = data.city;
         try {
           const fetchingWeather = await fetch(
-            `http://api.weatherapi.com/v1/current.json?key=168b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
+            `http://api1.weatherapi.com/v1/current.json?key=68b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
           );
           if (!response.ok) {
             throw new Error("Error fetching Weather");
@@ -66,13 +66,13 @@ export default function MainWeather() {
       <button
         className="main-weather__button"
         onTouchStart={(e) => {
-          touchHandler(e, container);
+          weatherTouchHandler(e, container);
         }}
         onTouchMove={(e) => {
-          touchHandler(e, container);
+          weatherTouchHandler(e, container);
         }}
         onTouchEnd={(e) => {
-          touchHandler(e, container);
+          weatherTouchHandler(e, container);
         }}
       ></button>
     </div>

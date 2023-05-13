@@ -1,61 +1,31 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Header from "../../components/Header/Header";
-import Todos from "../../components/Todos/Todos";
 import MainImage from "../../components/MainImage/MainImage";
-import {
-  addTodo,
-  deleteTodo,
-  toggleTodo,
-  editTodo,
-  addEditedTodo,
-} from "../../store/todo/todo.slice";
-import { auth, todos, user } from "../../store/selectors/selectors";
+import Button from "../../components/Button/Button";
+import { deleteTodo, toggleTodo, editTodo } from "../../store/todo/todo.slice";
+import { auth, user } from "../../store/selectors/selectors";
 import "./Main.scss";
 import MainProfileImage from "../../components/MainProfileImage/MainProfileImage";
 import MainProfileName from "../../components/MainProfileName/MainProfileName";
 import MainWeather from "../../components/MainWeather/MainWeather";
+import AddToDo from "../../components/Todos/AddToDo/AddToDo";
+import MainButtons from "../../components/MainButtons/MainButtons";
+import MainList from "../../components/MainList/MainList";
 export default function Main() {
   const [todoInput, setTodoInput] = useState("");
-  const [todoId, setTodoId] = useState("");
   const dispatch = useDispatch();
-  const todoList = useSelector(todos);
   const isAuth = useSelector(auth);
   const userData = useSelector(user);
-  const submitHandler = (todo) => {
-    if (todoId) {
-      const example = {
-        id: todoId,
-        text: todo,
-        completed: false,
-      };
-      dispatch(addEditedTodo(example));
-      setTodoInput("");
-      setTodoId("");
-      return;
+  const [openAddTodo, setOpenAddTodo] = useState(false);
+  const [todosList, setTodosList] = useState([]);
+  const categoryList = useSelector((state) => state.todo);
+  useEffect(() => {
+    if (categoryList[0]) {
+      setTodosList(categoryList[0].todos);
     }
-    if (todo) {
-      const example = {
-        id: Date.now(),
-        text: todo,
-        completed: false,
-      };
-      dispatch(addTodo(example));
-      setTodoInput("");
-    }
-  };
-  const deleteHandler = (id) => {
-    dispatch(deleteTodo(id));
-  };
-  const doneHandler = (id) => {
-    dispatch(toggleTodo(id));
-  };
-  const editHandler = (id, text) => {
-    dispatch(editTodo(id));
-    setTodoInput(text);
-    setTodoId(id);
-  };
+  }, [categoryList, todosList]);
   return (
     <div className="main">
       <Header isAuth={isAuth} />
@@ -63,16 +33,15 @@ export default function Main() {
       <MainProfileImage />
       <MainProfileName name={userData.name} surname={userData.surname} />
       <MainWeather />
-      <Todos
-        todoInput={todoInput}
-        setTodoInput={setTodoInput}
-        submitHandler={submitHandler}
-        doneHandler={doneHandler}
-        deleteHandler={deleteHandler}
-        todoList={todoList}
-        editHandler={editHandler}
-        isAuth={isAuth}
-      />
+      <MainButtons setOpenAddTodo={setOpenAddTodo} />
+      {openAddTodo && (
+        <AddToDo
+          todoInput={todoInput}
+          setTodoInput={setTodoInput}
+          setOpenAddTodo={setOpenAddTodo}
+        />
+      )}
+      <MainList todosList={todosList} />
     </div>
   );
 }

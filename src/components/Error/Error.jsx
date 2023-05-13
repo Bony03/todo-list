@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import "./Error.scss";
-export default function Error({ text, y }) {
+export default function Error({ text, y, closeError }) {
   if (y) {
     return (
       <motion.div
@@ -8,6 +8,7 @@ export default function Error({ text, y }) {
         animate={{ opacity: 1, y: 0 }}
         className="error-alert"
       >
+        <span onClick={closeError}></span>
         <div className="error-alert__text">{text}</div>
       </motion.div>
     );
@@ -18,6 +19,7 @@ export default function Error({ text, y }) {
       animate={{ opacity: 1, x: 0 }}
       className="error-alert"
     >
+      <span onClick={closeError}></span>
       <div className="error-alert__text">{text}</div>
     </motion.div>
   );
