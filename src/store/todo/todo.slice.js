@@ -1,36 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveTodos } from "./saveThunk/saveThunk";
-import { listenerMiddleware } from "../listernerMiddlewere/listernerMiddlewere";
-import { checkToken } from "../user/checkTokenThunk/checkTokenThunk";
 
-const initialState = {
-  todos: [],
-};
+const initialState = [];
 
 const todoSlice = createSlice({
   name: "todo",
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      state.todos.unshift(action.payload);
+      const item = state.find(
+        (categoryItem) => categoryItem.id === action.payload.categoryId
+      );
+      item.todos.unshift({
+        id: action.payload.id,
+        name: action.payload.name,
+        date: action.payload.date,
+        time: action.payload.time,
+        category: action.payload.categoryName,
+        categoryId: action.payload.categoryId,
+        completed: false,
+        edited: null,
+      });
     },
     deleteTodo: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      const item = state.find(
+        (categoryItem) => categoryItem.id === action.payload.categoryId
+      );
+      item.todos = item.todos.filter((todo) => todo.id !== action.payload.id);
     },
     toggleTodo: (state, action) => {
-      const elem = {
-        ...state.todos.find((todo) => todo.id === action.payload),
-      };
+      const item = state.find(
+        (categoryItem) => categoryItem.id === action.payload.categoryId
+      );
+      const elem = item.todos.find((todo) => todo.id === action.payload.id);
       elem.completed = !elem.completed;
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      elem.completed ? state.todos.push(elem) : state.todos.unshift(elem);
-    },
-    editTodo: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-    },
-    addEditedTodo: (state, action) => {
-      state.todos.unshift(action.payload);
-      state.todos[0].edit = Date.now();
     },
     addLoadedTodos: (state, action) => {
       for (let i = 0; i < action.payload.length; i++) {
@@ -44,6 +46,15 @@ const todoSlice = createSlice({
       }, []);
       state.todos = newArray;
     },
+    addCategory: (state) => {
+      state.push({ name: "My category", id: Date.now(), todos: [] });
+    },
+    setCategoryName: (state, action) => {
+      const item = state.find(
+        (categoryItem) => categoryItem.id === action.payload.id
+      );
+      item.name = action.payload.name;
+    },
   },
 });
 
@@ -54,6 +65,8 @@ export const {
   editTodo,
   addEditedTodo,
   addLoadedTodos,
+  addCategory,
+  setCategoryName,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;
