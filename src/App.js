@@ -7,18 +7,25 @@ import NotFound from "./components/NotFound/NotFound";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkToken } from "./store/user/checkTokenThunk/checkTokenThunk";
+import RequiredAuth from "./hoc/RequiredAuth";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log("render");
     dispatch(checkToken());
-  }, []);
+  }, [dispatch]);
   return (
     <Routes>
       <Route exact path="/" element={<Main />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/signIn" element={<Sign />} />
+      <Route
+        path="/profile"
+        element={
+          <RequiredAuth>
+            <Profile />
+          </RequiredAuth>
+        }
+      />
+      <Route path="/login" element={<Sign />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -3,21 +3,25 @@ import Button from "../../Button/Button";
 import FloatInput from "../../FloatInput/FloatInput";
 import "./AddToDo.scss";
 import Categories from "../../Categories/Categories";
-import { useDispatch, useSelector } from "react-redux";
-import { categories } from "../../../store/selectors/selectors";
+import { useDispatch } from "react-redux";
 import {
   addCategory,
   addTodo,
   setCategoryName,
 } from "../../../store/todo/todo.slice";
 import Error from "../../Error/Error";
-export default function AddToDo({ todoInput, setTodoInput, setOpenAddTodo }) {
+export default function AddToDo({
+  todoInput,
+  setTodoInput,
+  setOpenAddTodo,
+  categoriesArray,
+}) {
   function todaysDayMonth() {
     const date = Date();
 
     return date.split(" ").slice(1, 3);
   }
-
+  const [todayMonth, today] = todaysDayMonth();
   const day = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
@@ -39,7 +43,6 @@ export default function AddToDo({ todoInput, setTodoInput, setOpenAddTodo }) {
   const [openDay, setOpenDay] = useState(false);
   const [openMonth, setOpenMonth] = useState(false);
   const dispatch = useDispatch();
-  const [todayMonth, today] = todaysDayMonth();
   const [choosedCategory, setChoosedCategory] = useState("");
   const [choosedDay, setChoosedDay] = useState(today);
   const [choosedMonth, setChoosedMonth] = useState(todayMonth);
@@ -59,15 +62,17 @@ export default function AddToDo({ todoInput, setTodoInput, setOpenAddTodo }) {
       id: Date.now(),
       name: name,
       categoryId: category.id,
-      date: `${choosedMonth} ${choosedDay}, 2023`,
-      time: `${inputHour}:${inputMinutes}`,
+      date: Date.parse(
+        new Date(
+          `${choosedMonth} ${choosedDay}, 2023 ${inputHour}:${inputMinutes}`
+        )
+      ),
       categoryName: category.name,
     };
     dispatch(addTodo(task));
     setOpenAddTodo(false);
     setTodoInput("");
   }
-  const categoriesArray = useSelector(categories);
   function addCategoryHandler() {
     dispatch(addCategory());
   }

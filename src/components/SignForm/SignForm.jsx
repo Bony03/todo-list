@@ -7,11 +7,14 @@ import { useInput } from "../../helpers/email-password-validation/useInput";
 import { registerUser } from "../../store/user/registerThunk/registerThunk";
 import { loginUser } from "../../store/user/loginThunk/loginThunk";
 import { authSc, loading, authEr, auth } from "../../store/selectors/selectors";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { scrollLocker } from "../../helpers/scrollLocker/scrollLocker";
 import "./SignForm.scss";
+
 import SignButtons from "./SignButtons/SignButtons";
+import SignIn from "./SignIn/SignIn";
+import SignUp from "./SignUp/SignUp";
 export default function SignForm() {
   const [changeForm, setChangeForm] = useState(true);
   const dispatch = useDispatch();
@@ -28,7 +31,6 @@ export default function SignForm() {
     oneUpperCase: true,
     noSpaces: true,
   });
-
   const [enableButton, setEnableButton] = useState(false);
   useEffect(() => {
     setEnableButton(email.inputValid && password.inputValid);
@@ -38,6 +40,8 @@ export default function SignForm() {
   const authError = useSelector(authEr);
   const isAuth = useSelector(auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || "/";
   const resetValidation = (resetEmail, resetPassword) => {
     if (resetEmail) {
       email.setBlur(false);
@@ -57,9 +61,10 @@ export default function SignForm() {
   useEffect(() => {
     if (isAuth) {
       scrollLocker();
-      navigate("/");
+      navigate(fromPage);
     }
   }, [isAuth]);
+
   return (
     <div className="sign__form">
       <div className="sign__heading">{changeForm ? "Login" : "Register"}</div>
@@ -76,6 +81,11 @@ export default function SignForm() {
           email={email}
           password={password}
         />
+        {changeForm ? (
+          <SignIn email={email} password={password} />
+        ) : (
+          <SignUp email={email} password={password} />
+        )}
       </div>
       <div className="sign__footer">
         <Link

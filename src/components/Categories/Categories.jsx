@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./Categories.scss";
 export default function Categories({
   categoriesArray,
@@ -35,7 +34,10 @@ export default function Categories({
                         e.target.type = "input";
                       }, 700);
 
-                      setChoosedCategory(category.id);
+                      setChoosedCategory({
+                        id: category.id,
+                        name: category.name,
+                      });
                       return false;
                     }}
                     onClick={() => {
@@ -44,9 +46,19 @@ export default function Categories({
                         name: category.name,
                       });
                     }}
-                    onBlur={(e) => (e.target.type = "button")}
+                    onBlur={(e) => {
+                      setChoosedCategory({
+                        id: category.id,
+                        name: category.name,
+                      });
+                      e.target.type = "button";
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
+                        setChoosedCategory({
+                          id: category.id,
+                          name: category.name,
+                        });
                         e.target.type = "button";
                       }
                     }}
@@ -68,6 +80,10 @@ export default function Categories({
                   value={category.name}
                   onTouchEnd={() => {
                     clearTimeout(timer);
+                    setChoosedCategory({
+                      id: category.id,
+                      name: category.name,
+                    });
                     return false;
                   }}
                   onTouchStart={(e) => {
@@ -82,10 +98,20 @@ export default function Categories({
                       name: category.name,
                     });
                   }}
-                  onBlur={(e) => (e.target.type = "button")}
+                  onBlur={(e) => {
+                    e.target.type = "button";
+                    setChoosedCategory({
+                      id: category.id,
+                      name: category.name,
+                    });
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       e.target.type = "button";
+                      setChoosedCategory({
+                        id: category.id,
+                        name: category.name,
+                      });
                     }
                   }}
                 />

@@ -3,15 +3,18 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { scrollLocker } from "../../helpers/scrollLocker/scrollLocker";
 import { deleteTodo, toggleTodo } from "../../store/todo/todo.slice";
+
 import "./MainItem.scss";
 export default function MainItem({
   id,
   name,
-  time,
+  date,
   category,
   categoryId,
   completed,
 }) {
+  const time = new Date(date).toString().slice(16, 21);
+  const todoDate = new Date(date).toString().slice(4, 10);
   const dispatch = useDispatch();
   const item = useRef();
   function listTouchOpenning() {
@@ -36,19 +39,20 @@ export default function MainItem({
         posX2 = clientX - posX1;
         posX1 = clientX;
         if (clientX - posInitial > -132 && clientX - posInitial < 0) {
+          listItem.style.width = `${initialWidth}px`;
           if (doneButton.classList.contains("done")) {
             doneButton.classList.remove("done");
           }
           deleteButton.classList.add("delete");
           listItem.style.transform = `translateX(${(
-            Number(listItem.style.transform.replace(/[^-?0-9\.0-9+]/g, "")) +
+            Number(listItem.style.transform.replace(/[^-?0-9.0-9+]/g, "")) +
             posX2
           ).toFixed(2)}px)`;
           if (clientX - posInitial > -120) {
-            listItem.style.boxShadow = "none";
+            container.current.style.boxShadow = "none";
           }
           if (clientX - posInitial <= -120) {
-            listItem.style.boxShadow = "0 0 5px 2px #b71a12";
+            container.current.style.boxShadow = "0 0 5px 2px #b71a12";
           }
         } else if (clientX - posInitial >= 0 && clientX - posInitial < 132) {
           if (deleteButton.classList.contains("delete")) {
@@ -59,10 +63,10 @@ export default function MainItem({
             listItem.offsetWidth - posX2
           )}px`;
           if (clientX - posInitial < 115) {
-            listItem.style.boxShadow = "none";
+            container.current.style.boxShadow = "none";
           }
           if (clientX - posInitial >= 115) {
-            listItem.style.boxShadow = "0 0 5px 2px #098b53";
+            container.current.style.boxShadow = "0 0 5px 2px #098b53";
           }
         }
       }
@@ -70,24 +74,20 @@ export default function MainItem({
         posFinal = clientX;
         if (posInitial < posFinal) {
           if (Math.abs(posInitial - posFinal) > 115) {
-            console.log("first");
             dispatch(toggleTodo({ id, categoryId }));
             listItem.style.transition = "all 0.5s";
             listItem.style.width = `${initialWidth}px`;
-            listItem.style.boxShadow = "none";
+            container.current.style.boxShadow = "none";
           } else {
-            console.log("second");
             listItem.style.transition = "all 0.5s";
             listItem.style.transform = `translateX(0px)`;
             listItem.style.width = `${initialWidth}px`;
-            listItem.style.boxShadow = "none";
+            container.current.style.boxShadow = "none";
           }
         } else {
           if (Math.abs(posInitial - posFinal) > 120) {
-            console.log("third");
             dispatch(deleteTodo({ id, categoryId }));
           } else {
-            console.log("forth");
             listItem.style.transition = "all 0.5s";
             listItem.style.transform = `translateX(0px)`;
           }
@@ -147,7 +147,9 @@ export default function MainItem({
           listTouchHandler(e, item);
         }}
       >
-        <div className="item__date">{time}</div>
+        <div className="item__date">
+          {time} <span>{todoDate}</span>
+        </div>
         <div className="item__name">
           <h3 className="item__title">{name}</h3>
           <h5 className="item__category">{category}</h5>

@@ -1,6 +1,5 @@
 .todo-list {
   border-radius: 0.4rem;
-  background-color: #0b0b0b;
   &__heading {
     background-color: #111111;
     padding: 0.5rem;
@@ -22,6 +21,7 @@
       position: absolute;
       top: 0;
       left: 20px;
+      z-index: 4;
       &::before {
         content: "";
         display: block;
@@ -29,6 +29,7 @@
         height: 90%;
         position: absolute;
         top: 5%;
+        z-index: -1;
         border-radius: 1px;
         left: calc(50% - 1.5px);
         background: radial-gradient((#767676, #7676764c, #1a1a1a));
