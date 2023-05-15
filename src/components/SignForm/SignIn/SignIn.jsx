@@ -1,6 +1,3 @@
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Alert from "react-bootstrap/Alert";
 import PasswordReq from "../PasswordRequirements/PasswordReq";
 import FloatInput from "../../FloatInput/FloatInput";
 
