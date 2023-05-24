@@ -138,7 +138,16 @@ export default function ProfileUserInfo({
                 </AnimatePresence>
               </form>
               <div className="profile__item">
-                email:<span className="profile__item__span">{user.email}</span>
+                email:
+                <span
+                  className={
+                    user.isActivated
+                      ? "profile__item__span email-activated"
+                      : "profile__item__span email"
+                  }
+                >
+                  {user.email}
+                </span>
               </div>
               <div className="profile__upload">
                 <input

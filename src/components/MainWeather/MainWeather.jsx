@@ -23,7 +23,7 @@ export default function MainWeather() {
   useEffect(() => {
     async function FetchWeather() {
       try {
-        const response = await fetch("https://api1.db-ip.com/v2/free/self");
+        const response = await fetch("https://api.db-ip.com/v2/free/self");
         if (!response.ok) {
           throw new Error("Error fetching IP");
         }
@@ -31,7 +31,7 @@ export default function MainWeather() {
         const city = data.city;
         try {
           const fetchingWeather = await fetch(
-            `http://api1.weatherapi.com/v1/current.json?key=68b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
+            `http://api.weatherapi.com/v1/current.json?key=68b47b8a98d84ba6b53152525232904&q=${city}&aqi=no`
           );
           if (!response.ok) {
             throw new Error("Error fetching Weather");

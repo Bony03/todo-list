@@ -42,6 +42,33 @@
       width: 100%;
       display: flex;
       justify-content: center;
+      &.email {
+        &::before {
+          content: "";
+          background: url("../../../public/static/delete.svg");
+          background-size: contain;
+          position: absolute;
+          display: block;
+          width: 15px;
+          height: 15px;
+          top: 50%;
+          left: 120px;
+          transform: translate(-60px, -48%);
+        }
+      }
+      &.email-activated {
+        &::before {
+          content: "";
+          background: url("../../../public/static/done.svg");
+          position: absolute;
+          display: block;
+          width: 15px;
+          height: 15px;
+          top: 50%;
+          left: 120px;
+          transform: translate(-60px, -48%);
+        }
+      }
     }
   }
 

@@ -8,6 +8,7 @@ const initialState = {
   email: "",
   regDate: null,
   file: null,
+  isActivated: false,
 };
 
 export const userSlice = createSlice({
@@ -20,6 +21,7 @@ export const userSlice = createSlice({
       state.email = "";
       state.regDate = "";
       state.file = null;
+      state.isActivated = false;
       localStorage.removeItem("token");
     },
     setToken: (state, action) => {
@@ -35,6 +37,7 @@ export const userSlice = createSlice({
       }
       state.email = action.payload.email;
       state.regDate = action.payload.regDate;
+      state.isActivated = action.payload.isActivated;
     },
     setName: (state, action) => {
       state.name = action.payload.name;
