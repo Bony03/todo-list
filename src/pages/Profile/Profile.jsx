@@ -13,6 +13,7 @@ import {
   auth,
   authEr,
   authSc,
+  profileSc,
 } from "../../store/selectors/selectors";
 import { setPersonalInfo } from "../../store/user/setPersonalInfoThunk/setPersonalInfo";
 import Header from "../../components/CompHeader/Header";
@@ -25,7 +26,8 @@ export default function Profile() {
   const navigate = useNavigate();
   const isAuth = useSelector(auth);
   const userInfo = useSelector(user);
-  const profEr = useSelector(profileEr);
+  const profError = useSelector(profileEr);
+  const profSuccess = useSelector(profileSc);
   const authError = useSelector(authEr);
   const authSuccess = useSelector(authSc);
   const [input, setInput] = useState({ name: "", surname: "" });
@@ -61,7 +63,8 @@ export default function Profile() {
       <MainProfileImage />
       <ProfileUserInfo
         setContent={setContent}
-        profEr={profEr}
+        profError={profError}
+        profSuccess={profSuccess}
         user={userInfo}
         input={input}
         setInput={setInput}

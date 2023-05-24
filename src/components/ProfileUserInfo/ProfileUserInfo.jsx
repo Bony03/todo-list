@@ -6,9 +6,11 @@ import Button from "../CompButton/Button";
 import LogOut from "../ProfileLogOut/ProfileLogOut";
 import FloatInput from "../CompFloatInput/FloatInput";
 import "./ProfileUserInfo.scss";
+import Success from "../CompSuccess/Success";
 export default function ProfileUserInfo({
   setContent,
-  profEr,
+  profError,
+  profSuccess,
   user,
   input,
   setInput,
@@ -29,10 +31,18 @@ export default function ProfileUserInfo({
       <div className="profile">
         <div className="profile__container">
           <div className="profile__notification">
-            {profEr && (
+            {profError && (
               <Error
                 y="-10"
-                text={profEr}
+                text={profError}
+                closeError={() => {
+                  closeErrorHandler();
+                }}
+              />
+            )}
+            {profSuccess && (
+              <Success
+                text={profSuccess}
                 closeError={() => {
                   closeErrorHandler();
                 }}
