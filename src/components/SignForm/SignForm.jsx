@@ -1,80 +1,62 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Forms from "./Forms/Forms";
-import Success from "../Success/Success";
-import Error from "../Error/Error";
-import { useInput } from "../../helpers/email-password-validation/useInput";
-import { registerUser } from "../../store/user/registerThunk/registerThunk";
-import { loginUser } from "../../store/user/loginThunk/loginThunk";
-import { authSc, loading, authEr, auth } from "../../store/selectors/selectors";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { scrollLocker } from "../../helpers/scrollLocker/scrollLocker";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import SignFormLabel from "../SignFormLabel/SignFormLabel";
+import Success from "../CompSuccess/Success";
+import Error from "../CompError/Error";
+import SignButtons from "../SignButtons/SignButtons";
+import SignInForm from "../SignInForm/SignInForm";
+import SignUpForm from "../SignUpForm/SignUpForm";
+import Spinner from "../CompSpinner/Spinner";
 import "./SignForm.scss";
 
-import SignButtons from "./SignButtons/SignButtons";
-import SignIn from "./SignIn/SignIn";
-import SignUp from "./SignUp/SignUp";
-export default function SignForm() {
+export default function SignForm({
+  setRecoveryPasswordForm,
+  registerHandler,
+  loginHandler,
+  enableButton,
+  email,
+  password,
+  authSuccess,
+  authError,
+  isAuth,
+  authLoading,
+  resetValidation,
+  closeError,
+}) {
   const [changeForm, setChangeForm] = useState(true);
-  const dispatch = useDispatch();
-  const email = useInput("", {
-    emptyError: true,
-    emailError: true,
-    noSpaces: true,
-  });
-  const password = useInput("", {
-    emptyError: true,
-    minLength: 8,
-    oneNumber: true,
-    oneLowCase: true,
-    oneUpperCase: true,
-    noSpaces: true,
-  });
-  const [enableButton, setEnableButton] = useState(false);
-  useEffect(() => {
-    setEnableButton(email.inputValid && password.inputValid);
-  }, [email.inputValid, password.inputValid]);
-  const authLoading = useSelector(loading);
-  const authSuccess = useSelector(authSc);
-  const authError = useSelector(authEr);
-  const isAuth = useSelector(auth);
   const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || "/";
-  const resetValidation = (resetEmail, resetPassword) => {
-    if (resetEmail) {
-      email.setBlur(false);
-      email.setValue("");
-    }
-    if (resetPassword) {
-      password.setBlur(false);
-      password.setValue("");
-    }
-  };
-  function loginHandler() {
-    dispatch(loginUser({ email: email.value, password: password.value }));
-  }
-  function registerHandler() {
-    dispatch(registerUser({ email: email.value, password: password.value }));
-  }
   useEffect(() => {
     if (isAuth) {
-      scrollLocker();
       navigate(fromPage);
     }
-  }, [isAuth]);
+  }, [isAuth, navigate, fromPage]);
 
   return (
     <div className="sign__form">
       <div className="sign__heading">{changeForm ? "Login" : "Register"}</div>
       <div className="sign__body">
         <div className="sign__notification">
-          {authSuccess && <Success text={authSuccess} />}
-          {authError && <Error text={authError} />}
+          {authSuccess && (
+            <Success
+              text={authSuccess}
+              closeError={() => {
+                closeError();
+              }}
+            />
+          )}
+          {authError && (
+            <Error
+              text={authError}
+              closeError={() => {
+                closeError();
+              }}
+            />
+          )}
         </div>
-
-        <Forms
+        {authLoading && <Spinner />}
+        <SignFormLabel
           changeForm={changeForm}
           setChangeForm={setChangeForm}
           resetValidation={resetValidation}
@@ -82,10 +64,20 @@ export default function SignForm() {
           password={password}
         />
         {changeForm ? (
-          <SignIn email={email} password={password} />
+          <SignInForm email={email} password={password} />
         ) : (
-          <SignUp email={email} password={password} />
+          <SignUpForm email={email} password={password} />
         )}
+      </div>
+      <div className="sign__recovery">
+        <span
+          className="sign__recovery__button"
+          onClick={() => {
+            setRecoveryPasswordForm(true);
+          }}
+        >
+          Recover password
+        </span>
       </div>
       <div className="sign__footer">
         <Link

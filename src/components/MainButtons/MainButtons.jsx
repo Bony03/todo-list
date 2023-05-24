@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { filters } from "../../helpers/filters/filters";
-import Button from "../Button/Button";
+import Button from "../CompButton/Button";
 import "./MainButtons.scss";
-import { useSelector } from "react-redux";
-import { auth } from "../../store/selectors/selectors";
 export default function MainButtons({
+  isAuth,
   setOpenAddTodo,
   categoriesArray,
   setTodosList,
   todosList,
+  saveTodosHandler,
 }) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState(false);
@@ -28,7 +28,7 @@ export default function MainButtons({
     categoriesArray,
     setClearButton
   );
-  const isAuth = useSelector(auth);
+
   return (
     <div className="main-buttons">
       <div className="main-buttons__container">
@@ -106,7 +106,6 @@ export default function MainButtons({
               >
                 <path d="M13.5981 18.5C12.4434 20.5 9.55662 20.5 8.40192 18.5L0.607693 5C-0.547007 3 0.89637 0.5 3.20577 0.5H18.7942C21.1036 0.5 22.547 3 21.3923 5L13.5981 18.5Z" />
               </svg>
-
               {filtersOpen && (
                 <div className="main-buttons__sort-date__body">
                   <motion.div
@@ -155,7 +154,9 @@ export default function MainButtons({
           {isAuth && (
             <button
               className="button main-buttons__save-todos"
-              onClick={() => {}}
+              onClick={() => {
+                saveTodosHandler(categoriesArray);
+              }}
             >
               Save
             </button>
