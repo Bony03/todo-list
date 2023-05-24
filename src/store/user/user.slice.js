@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { listenerMiddleware } from "../listernerMiddlewere/listernerMiddlewere";
+import { systemLogOut } from "../system/system.slice";
 
 const initialState = {
   name: "",
@@ -9,16 +11,15 @@ const initialState = {
 };
 
 export const userSlice = createSlice({
-  name: "auth",
+  name: "user",
   initialState,
   reducers: {
     logOut: (state, action) => {
-      state = {
-        name: "",
-        surname: "",
-        email: "",
-        regDate: null,
-      };
+      state.name = "";
+      state.surname = "";
+      state.email = "";
+      state.regDate = "";
+      state.file = null;
       localStorage.removeItem("token");
     },
     setToken: (state, action) => {
@@ -49,3 +50,10 @@ export const { logOut, setToken, setUser, setName, setPhoto } =
   userSlice.actions;
 
 export default userSlice.reducer;
+
+listenerMiddleware.startListening({
+  type: "user/logOut",
+  effect: (_, { dispatch }) => {
+    dispatch(systemLogOut());
+  },
+});

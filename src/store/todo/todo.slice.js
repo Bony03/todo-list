@@ -34,17 +34,23 @@ const todoSlice = createSlice({
       const elem = item.todos.find((todo) => todo.id === action.payload.id);
       elem.completed = !elem.completed;
     },
-    addLoadedTodos: (state, action) => {
-      for (let i = 0; i < action.payload.length; i++) {
-        state.todos.push(action.payload[i]);
+    addLoaded: (state, action) => {
+      const copyArray = JSON.parse(JSON.stringify(state));
+      for (let index = 0; index < action.payload.length; index++) {
+        copyArray.push(action.payload[index]);
       }
-      const newArray = state.todos.reduce((prev, curr) => {
-        if (!prev.find((v) => v.id === curr.id)) {
-          prev.push(curr);
+      const newArray = copyArray.reduce((acc, item) => {
+        if (
+          !acc.find((elem) => {
+            return elem.id === item.id;
+          })
+        ) {
+          acc.push(item);
         }
-        return prev;
+        return acc;
       }, []);
-      state.todos = newArray;
+      state = newArray;
+      return state;
     },
     addCategory: (state) => {
       state.push({ name: "My category", id: Date.now(), todos: [] });
@@ -64,7 +70,7 @@ export const {
   toggleTodo,
   editTodo,
   addEditedTodo,
-  addLoadedTodos,
+  addLoaded,
   addCategory,
   setCategoryName,
 } = todoSlice.actions;

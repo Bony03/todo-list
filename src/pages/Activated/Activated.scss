@@ -1,0 +1,31 @@
+.activated {
+  &__container {
+  }
+  &__heading-body {
+    margin: 12rem 0 2rem 0;
+    display: flex;
+    justify-content: center;
+  }
+  &__heading {
+    text-align: center;
+    width: 250px;
+    font-size: 24px;
+    color: #dddddd;
+    &::before {
+      content: "";
+      background: url("../../../public/static/done.svg") no-repeat;
+      background-size: cover;
+      display: block;
+      width: 70px;
+      height: 70px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 1rem;
+    }
+  }
+  &__body-link {
+  }
+  &__link {
+  }
+}

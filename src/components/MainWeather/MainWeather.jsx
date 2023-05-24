@@ -10,13 +10,20 @@ export default function MainWeather() {
     location: { name: "", country: "" },
   });
   const container = useRef();
-
   const weatherTouchHandler = weatherTouchOpenning();
-
+  const clickHandler = (container) => {
+    container.current.style.transition = "all 0.5s";
+    if (Number(container.current.style.height.replace(/px/g, "")) > 100) {
+      container.current.style.height = 0;
+      container.current.style.padding = "0";
+    } else {
+      container.current.style.height = "105px";
+    }
+  };
   useEffect(() => {
     async function FetchWeather() {
       try {
-        const response = await fetch("https://api.db-ip1.com/v2/free/self");
+        const response = await fetch("https://api1.db-ip.com/v2/free/self");
         if (!response.ok) {
           throw new Error("Error fetching IP");
         }
@@ -65,6 +72,9 @@ export default function MainWeather() {
       </div>
       <button
         className="main-weather__button"
+        onMouseDown={() => {
+          clickHandler(container);
+        }}
         onTouchStart={(e) => {
           weatherTouchHandler(e, container);
         }}

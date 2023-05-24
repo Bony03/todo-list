@@ -1,0 +1,95 @@
+.categories {
+  padding-top: 1rem;
+
+  &__container {
+    & button {
+      display: block;
+      color: #767676;
+      position: relative;
+      padding-left: 1.5625rem;
+      font-weight: 600;
+      background-color: transparent;
+      border: 0;
+      margin: 2rem auto;
+      &::before {
+        content: url(../../../public/static/plus.svg);
+        fill: #767676;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -40%);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+  &__heading {
+    display: flex;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #767676;
+    margin-bottom: 1rem;
+  }
+  &__list {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  &__item {
+    position: relative;
+    & input {
+      width: 200px;
+      outline: 0;
+      padding: 5px 25px 5px 5px;
+      text-transform: capitalize;
+      background-color: transparent;
+      width: max-content;
+      border: none;
+      font-weight: 500;
+      color: #767676;
+      border-bottom: 2px solid #767676;
+      border-radius: 3px;
+      &:focus {
+        box-shadow: 0 0 5px #5b5b5b;
+      }
+      &:active {
+        transform: scale(0.98);
+      }
+      &:active ~ span {
+        transform: translate(0, -50%) scale(0.95);
+      }
+      &:active ~ span::after {
+        transform: translate(-50%, 0) scale(0.95);
+      }
+    }
+    &.active input {
+      border-bottom: 2px solid #098b53;
+      box-shadow: 0 0 5px #098b53;
+    }
+    & span {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: calc(100% - 20px);
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #0a0a0a;
+      transform: translate(0, -50%);
+      &::after {
+        content: attr(count);
+        font-size: 10px;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        font-weight: 700;
+        color: white;
+      }
+    }
+  }
+}

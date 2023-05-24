@@ -1,14 +1,15 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Main from "./pages/Main/Main";
-import Profile from "./pages/Profile/Profile";
-import Sign from "./pages/Sign/Sign";
-import NotFound from "./components/NotFound/NotFound";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkToken } from "./store/user/checkTokenThunk/checkTokenThunk";
+import Main from "./pages/Main/Main";
+import Profile from "./pages/Profile/Profile";
+import Sign from "./pages/Sign/Sign";
+import NotFound from "./pages/NotFound/NotFound";
 import RequiredAuth from "./hoc/RequiredAuth";
-
+import Activated from "./pages/Activated/Activated";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import "./App.css";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,6 +27,8 @@ function App() {
         }
       />
       <Route path="/login" element={<Sign />} />
+      <Route path="/activated/" element={<Activated />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

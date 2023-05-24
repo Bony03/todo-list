@@ -6,14 +6,16 @@ export const uploadPhoto = createAsyncThunk(
     try {
       const formData = new FormData();
       formData.append("file", photo);
-      const response = await fetch("http://localhost:3001/profile/upload", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        body: formData,
-      });
-
+      const response = await fetch(
+        "http://192.168.31.249:3001/profile/upload",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          body: formData,
+        }
+      );
       const buffer = await response.arrayBuffer();
       const bytes = new Uint8Array(buffer);
       const file = new Blob([bytes.buffer]);

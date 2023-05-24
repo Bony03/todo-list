@@ -46,7 +46,26 @@ const systemSlice = createSlice({
     setProfileSuccess: (state, action) => {
       state.profileSuccess = action.payload;
     },
-    closeError: (state, action) => {
+    clearError: (state, action) => {
+      state.authError = null;
+      state.todosError = null;
+      state.profileError = null;
+    },
+    systemLogOut: (state, action) => {
+      state.loading = false;
+      state.isAuth = false;
+      state.showSign = false;
+      state.authSuccess = null;
+      state.todosSuccess = null;
+      state.profileSuccess = null;
+      state.authError = null;
+      state.todosError = null;
+      state.profileError = null;
+    },
+    clearAllNotifications: (state, action) => {
+      state.authSuccess = null;
+      state.todosSuccess = null;
+      state.profileSuccess = null;
       state.authError = null;
       state.todosError = null;
       state.profileError = null;
@@ -65,6 +84,8 @@ export const {
   setTodosError,
   setProfileSuccess,
   setProfileError,
-  closeError,
+  clearError,
+  systemLogOut,
+  clearAllNotifications,
 } = systemSlice.actions;
 export default systemSlice.reducer;

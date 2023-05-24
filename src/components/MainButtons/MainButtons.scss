@@ -39,7 +39,6 @@
     &__item {
       font-weight: 600;
       color: #767676;
-      margin-bottom: 0.375rem;
     }
   }
   &__all-todo {
@@ -52,6 +51,7 @@
   &__body {
     display: flex;
     gap: 0.725rem;
+    margin-bottom: 1rem;
   }
   &__add-todo {
     color: #f2f2f2;
@@ -69,12 +69,12 @@
 
   &__clear-filters {
     color: #f2f2f2;
-    background-color: #1095af;
+    background-color: #767676;
     font-weight: 700;
     font-size: 1rem;
     margin: 0 0 0 0;
     &:hover {
-      box-shadow: 0 0 0 3px#1095af9e;
+      box-shadow: 0 0 0 3px#7676769e;
     }
     &:active {
       transform: scale(0.93);
@@ -82,12 +82,12 @@
   }
   &__save-todos {
     color: #f2f2f2;
-    background-color: #4a10af;
+    background-color: #427eec;
     font-weight: 700;
     font-size: 1rem;
     margin: 0 0 0 0;
     &:hover {
-      box-shadow: 0 0 0 3px#4a10af9e;
+      box-shadow: 0 0 0 3px#427eec9e;
     }
     &:active {
       transform: scale(0.93);

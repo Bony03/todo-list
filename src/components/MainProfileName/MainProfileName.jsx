@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { dateFormatterMain } from "../../helpers/dateFormat/dateFormatter";
 import "./MainProfileName.scss";
 
-export default function MainProfileName({ name, surname }) {
+export default function MainProfileName({ name }) {
   return (
     <div className="main-profile-name">
       <div className="main-profile-name__container">

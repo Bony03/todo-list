@@ -1,0 +1,37 @@
+.not-found {
+  height: calc(100vh - 312px);
+  &__heading {
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 1.5rem;
+    color: #767676;
+  }
+  &__body-link {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  &__link {
+    border-radius: 0.375rem;
+    text-align: center;
+    color: #dedede;
+    background-color: #098b53;
+    font-weight: 500;
+    padding: 0.375rem 1rem;
+    animation: pulse 4s ease-out infinite;
+  }
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0px #098b539e;
+  }
+  25% {
+    box-shadow: 0 0 0 5px #098b539e, 0 0 0 10px #098b5376;
+  }
+  50% {
+    box-shadow: 0 0 0 0px #098b5387, 0 0 0px 0px #098b534b;
+  }
+  100% {
+    box-shadow: 0 0 0 0px #098b539e, 0 0 0px 0px #098b5376;
+  }
+}

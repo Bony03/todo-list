@@ -1,13 +1,12 @@
-import { photoHandler } from "../../helpers/photoHandler/photoHandler";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { auth, file } from "../../store/selectors/selectors";
-import "./MainProfileImage.scss";
+import { file } from "../../store/selectors/selectors";
 import { useNavigate } from "react-router-dom";
+import { photoHandler } from "../../helpers/photoHandler/photoHandler";
+import "./MainProfileImage.scss";
 
 export default function ProfileImage() {
   const navigate = useNavigate();
-  const isAuth = useSelector(auth);
   const userFile = useSelector(file);
   const ref = useRef();
   useEffect(() => {
@@ -15,6 +14,7 @@ export default function ProfileImage() {
       photoHandler(userFile, ref);
     }
   }, [userFile]);
+
   return (
     <div className="main-profile-image">
       <div className="main-profile-image__container">
@@ -25,8 +25,7 @@ export default function ProfileImage() {
                 ? "main-profile-image__image"
                 : "main-profile-image__image skeleton"
             }
-            onClick={(e) => {
-              console.log(e);
+            onClick={() => {
               navigate("/profile");
             }}
           >

@@ -42,9 +42,10 @@ export const useInput = (initialValue, validations) => {
               : setOneNumberError(false);
             break;
           case "noSpaces":
-            value.search(/\s/) !== -1
+            value.search(/\s/g) !== -1
               ? setSpaceError(true)
               : setSpaceError(false);
+            break;
         }
       }
     }, [value]);

@@ -1,0 +1,49 @@
+.recovery {
+  width: 500px;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  position: relative;
+  &__heading {
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__close {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #767676;
+    color: #f0f0f0;
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 3px #7676769c;
+    }
+  }
+  &__submit {
+    background-color: #098b53;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f0f0f0;
+    &:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 3px #098b539c;
+    }
+  }
+}
+
+@media (max-width: 499.98px) {
+  .recovery {
+    width: 100%;
+    border-radius: 0;
+  }
+}

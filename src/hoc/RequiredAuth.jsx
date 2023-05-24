@@ -4,7 +4,6 @@ import { auth } from "../store/selectors/selectors";
 
 export default function RequiredAuth({ children }) {
   const isAuth = useSelector(auth);
-  console.log(isAuth);
   const location = useLocation();
   if (!isAuth) {
     return <Navigate to="/login" state={{ from: location }} />;

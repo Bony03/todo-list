@@ -1,0 +1,150 @@
+.profile {
+  &__container {
+    padding: 1rem;
+  }
+  &__notification {
+    margin: 1.5rem 0;
+  }
+  &__info {
+    width: 100%;
+    position: relative;
+    color: #767676;
+  }
+  &__title {
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #dddddd;
+  }
+  &__list {
+    margin-bottom: 3rem;
+    &.entered {
+      & .profile__item {
+        &:last-child {
+          margin-bottom: 0.375rem;
+        }
+      }
+    }
+  }
+  &__item {
+    width: 100%;
+    font-size: 1rem;
+    position: relative;
+    margin-bottom: 0.375rem;
+    display: flex;
+    align-items: center;
+    &:last-child {
+      margin-bottom: 1rem;
+    }
+    &__span {
+      color: #cdcdcd;
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__input {
+    margin: 0 0 0 1rem;
+    height: 42px;
+    & label {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    & input {
+      height: auto;
+      border: none;
+      font-size: 1rem;
+      padding: 0.725rem 0.725rem;
+      &:focus {
+        border: none;
+        & ~ .floating-input__label {
+          transform: translate(-10px, -155%) scale(0.8);
+        }
+      }
+      &.typed {
+        border: none;
+      }
+      &.typed ~ .floating-input__label {
+        transform: translate(-10px, -155%) scale(0.8);
+      }
+    }
+  }
+  &__save-body {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__save {
+    background-color: #098b53;
+    &:active {
+      box-shadow: 0 0 0 5px #098b539f;
+    }
+    &:hover {
+      box-shadow: 0 0 0 3px#098b539f;
+    }
+  }
+  &__upload {
+    margin-top: 2rem;
+  }
+  &__upload-image {
+    display: block;
+    width: 100%;
+    height: 5rem;
+    visibility: hidden;
+    position: relative;
+    &::before {
+      content: "";
+      visibility: visible;
+      background: url("../../../public//static/upload.svg") center no-repeat;
+      background-size: 35px;
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 80px;
+      top: 0;
+      left: 50%;
+      z-index: -1;
+      transform: translateX(-300%);
+    }
+    &::after {
+      content: "Upload image";
+      visibility: visible;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      background: linear-gradient(45deg, #098b53 40%, #767676 60%, #1c1c1c 95%);
+      background-clip: text;
+      color: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 0.375rem;
+      border: 2px dashed #767676;
+    }
+  }
+  &__reg-date {
+    color: #393939;
+  }
+  &__settings {
+    margin-bottom: 1rem;
+  }
+  &__change-password {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    background-color: #427eec;
+    color: #dddddd;
+    &:active {
+      box-shadow: 0 0 0 5px #427eec9e;
+    }
+  }
+  &__logout {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

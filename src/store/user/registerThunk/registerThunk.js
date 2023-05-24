@@ -4,6 +4,7 @@ import {
   setAuthError,
   setLoading,
   setAuthSuccess,
+  setProfileError,
 } from "../../system/system.slice";
 import { setToken, setUser } from "../user.slice";
 
@@ -40,6 +41,7 @@ export const registerUser = createAsyncThunk(
       dispatch(setUser(data.user));
       dispatch(setAuthSuccess(data.message));
       dispatch(setToken(data.token));
+      dispatch(setProfileError(`Need to set data in Settings`));
       return;
     } catch (error) {
       console.log(error.message);

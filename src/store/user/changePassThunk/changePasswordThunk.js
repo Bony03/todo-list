@@ -1,18 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  setProfileError,
+  setAuthError,
   setLoading,
-  setProfileSuccess,
+  setAuthSuccess,
+  clearAllNotifications,
 } from "../../system/system.slice";
-import { setToken } from "../user.slice";
-
+import { logOut } from "../user.slice";
 export const changePassword = createAsyncThunk(
   "auth/changePassword",
   async function (password, { dispatch }) {
     try {
+      dispatch(clearAllNotifications());
       dispatch(setLoading(true));
       const response = await fetch(
-        "http://localhost:3001/auth/change-password",
+        "http://192.168.31.249:3001/auth/change-password",
         {
           method: "PUT",
           headers: {
@@ -24,17 +25,23 @@ export const changePassword = createAsyncThunk(
       );
       if (!response.ok) {
         const data = await response.json();
+        console.log(data);
+        if (data.message === "Token is not valid") {
+          dispatch(setLoading(false));
+          dispatch(logOut());
+          return;
+        }
         dispatch(setLoading(false));
         throw new Error(data.message);
       }
-      const data = response.json();
+      const data = await response.json();
       dispatch(setLoading(false));
-      dispatch(setProfileSuccess(data.message));
-      dispatch(setToken(data.token));
+      dispatch(setAuthSuccess(data.message));
+      localStorage.setItem("token", data.token);
       return;
     } catch (error) {
       console.log(error.message);
-      dispatch(setProfileError(error.message));
+      dispatch(setAuthError(error.message));
     }
   }
 );

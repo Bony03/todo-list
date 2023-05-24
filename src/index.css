@@ -33,3 +33,7 @@ button {
 .lock {
   overflow: hidden;
 }
+#root {
+  min-height: 100vh;
+  height: 100%;
+}

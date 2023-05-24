@@ -1,6 +1,6 @@
-import MainItem from "../MainItem/MainItem";
+import MainListItem from "../MainListItem/MainListItem";
 import "./MainList.scss";
-export default function MainList({ todosList }) {
+export default function MainList({ todosList, deleteHandler, toggleHandler }) {
   return (
     <div className="todo-list">
       <div className="todo-list__container">
@@ -9,7 +9,7 @@ export default function MainList({ todosList }) {
           {!!todosList.length && <span className="todo-list__line"></span>}
           {todosList.map((todo) => {
             return (
-              <MainItem
+              <MainListItem
                 id={todo.id}
                 name={todo.name}
                 date={todo.date}
@@ -17,6 +17,8 @@ export default function MainList({ todosList }) {
                 categoryId={todo.categoryId}
                 completed={todo.completed}
                 key={todo.id}
+                deleteHandler={deleteHandler}
+                toggleHandler={toggleHandler}
               />
             );
           })}

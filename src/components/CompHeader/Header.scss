@@ -1,0 +1,47 @@
+.header {
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  &__container {
+    overflow: hidden;
+  }
+  &__body {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__brand {
+    z-index: 11;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 0 5px #000000b7;
+    & span {
+      color: #1c1c1c;
+      text-shadow: 0 0 5px #ffffffbb;
+    }
+  }
+  &__button {
+    color: #dfdfdf;
+    backdrop-filter: blur(10px);
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    padding: 0.375rem 1rem;
+    animation: pulse2 3s ease-out 10;
+  }
+}
+@keyframes pulse2 {
+  0% {
+    box-shadow: 0 0 0 0px #000000b7;
+  }
+
+  50% {
+    box-shadow: 0 0 0 3px #000000b7, 0 0 0 6px #00000077;
+  }
+  100% {
+    box-shadow: 0 0 0 0px #000000b7;
+  }
+}
